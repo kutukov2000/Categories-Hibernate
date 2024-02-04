@@ -32,7 +32,7 @@ public class Main {
         }
     }
 
-    private static void AddCategory() {
+    private static void addCategory() {
         Scanner scanner = new Scanner(System.in);
         Calendar calendar = Calendar.getInstance();
 
