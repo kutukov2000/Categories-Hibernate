@@ -10,6 +10,10 @@ import com.example.utils.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
+        AddCategory();
+    }
+
+    private static void AddCategory() {
         Scanner scanner = new Scanner(System.in);
         Calendar calendar = Calendar.getInstance();
 
