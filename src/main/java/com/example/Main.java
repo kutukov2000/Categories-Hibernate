@@ -7,16 +7,51 @@ import java.util.Scanner;
 import org.hibernate.Session;
 
 import com.example.models.Category;
+import com.example.models.Product;
 import com.example.utils.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
         // AddCategory();
 
-        getAllCategories();        
+        // getAllCategories();
+
+        addProduct();
     }
 
-    private static void getAllCategories(){
+    private static void addProduct() {
+        Scanner scanner = new Scanner(System.in);
+
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session context = sessionFactory.openSession()) {
+            context.beginTransaction();
+
+            Product product = new Product();
+
+            System.out.println("Enter name: ");
+            String name = scanner.nextLine();
+            product.setName(name);
+
+            System.out.println("Enter description: ");
+            String image = scanner.nextLine();
+            product.setDescription(image);
+
+            System.out.println("Enter price: ");
+            double price = scanner.nextDouble();
+            product.setPrice(price);
+
+            Category category = new Category();
+            System.out.println("Enter category id: ");
+            int category_id = scanner.nextInt();
+            category.setId(category_id);
+            product.setCategory(category);
+
+            context.save(product);
+            context.getTransaction().commit();
+        }
+    }
+
+    private static void getAllCategories() {
         var sessionFactory = HibernateUtil.getSessionFactory();
         try (Session context = sessionFactory.openSession()) {
             context.beginTransaction();
