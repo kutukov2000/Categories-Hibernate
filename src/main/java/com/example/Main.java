@@ -12,7 +12,7 @@ import com.example.utils.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
-        deleteCategory();
+        deleteProduct();
     }
 
     private static void addProduct() {
@@ -80,6 +80,22 @@ public class Main {
             product.setCategory(category);
 
             context.save(product);
+            context.getTransaction().commit();
+        }
+    }
+
+    private static void deleteProduct() {
+        Scanner scanner = new Scanner(System.in);
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session context = sessionFactory.openSession()) {
+            context.beginTransaction();
+
+            System.out.println("Enter product id: ");
+            int id = scanner.nextInt();
+
+            Product product = (Product) context.get(Product.class, id);
+
+            context.delete(product);
             context.getTransaction().commit();
         }
     }
