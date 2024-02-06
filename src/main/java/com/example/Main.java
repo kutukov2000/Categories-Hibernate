@@ -14,9 +14,12 @@ public class Main {
     public static void main(String[] args) {
         // AddCategory();
 
-        // getAllCategories();
+        getAllCategories();
 
-        addProduct();
+        editCategory();
+
+        getAllCategories();
+        // addProduct();
     }
 
     private static void addProduct() {
@@ -86,6 +89,33 @@ public class Main {
             category.setImage(image);
 
             category.setDateCreated(calendar.getTime());
+
+            context.save(category);
+            context.getTransaction().commit();
+        }
+    }
+
+    private static void editCategory() {
+        Scanner scanner = new Scanner(System.in);
+
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session context = sessionFactory.openSession()) {
+            context.beginTransaction();
+
+            System.out.println("Enter category id: ");
+            int id = scanner.nextInt();
+
+            scanner.nextLine();
+
+            Category category = (Category) context.get(Category.class, id);
+
+            System.out.println("Enter new name: ");
+            String name = scanner.nextLine();
+            category.setName(name);
+
+            System.out.println("Enter new image: ");
+            String image = scanner.nextLine();
+            category.setImage(image);
 
             context.save(category);
             context.getTransaction().commit();
