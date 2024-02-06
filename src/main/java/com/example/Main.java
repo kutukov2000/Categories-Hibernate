@@ -12,14 +12,7 @@ import com.example.utils.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
-        // AddCategory();
-
-        getAllCategories();
-
-        editCategory();
-
-        getAllCategories();
-        // addProduct();
+        editProduct();
     }
 
     private static void addProduct() {
@@ -45,6 +38,43 @@ public class Main {
 
             Category category = new Category();
             System.out.println("Enter category id: ");
+            int category_id = scanner.nextInt();
+            category.setId(category_id);
+            product.setCategory(category);
+
+            context.save(product);
+            context.getTransaction().commit();
+        }
+    }
+
+    private static void editProduct() {
+        Scanner scanner = new Scanner(System.in);
+
+        var sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session context = sessionFactory.openSession()) {
+            context.beginTransaction();
+
+            System.out.println("Enter product id: ");
+            int id = scanner.nextInt();
+
+            scanner.nextLine();
+
+            Product product = (Product) context.get(Product.class, id);
+
+            System.out.println("Enter new name: ");
+            String name = scanner.nextLine();
+            product.setName(name);
+
+            System.out.println("Enter new description: ");
+            String description = scanner.nextLine();
+            product.setDescription(description);
+
+            System.out.println("Enter price: ");
+            double price = scanner.nextDouble();
+            product.setPrice(price);
+
+            Category category = new Category();
+            System.out.println("Enter new category id: ");
             int category_id = scanner.nextInt();
             category.setId(category_id);
             product.setCategory(category);
