@@ -7,10 +7,12 @@ import javax.persistence.*;
 import com.example.utils.ImageUtil;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "tbl_product_images")
+@NoArgsConstructor
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +31,10 @@ public class ProductImage {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return image;
     }
 }
