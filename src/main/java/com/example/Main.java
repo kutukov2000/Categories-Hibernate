@@ -17,7 +17,50 @@ import com.example.utils.ImageUtil;
 
 public class Main {
     public static void main(String[] args) {
-        deleteCategory();
+        Menu();
+    }
+
+    private static void Menu() {
+        Scanner input = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("\n---Menu---");
+            System.out.println("[1] - CategoriesList");
+            System.out.println("[2] - Add category");
+            System.out.println("[3] - Edit category");
+            System.out.println("[4] - Delete category");
+            System.out.println("--------------------");
+            System.out.println("[5] - Add Product");
+            System.out.println("[6] - Edit Product");
+            System.out.println("[7] - Delete Product");
+            System.out.println("[8] - Exit");
+            System.out.println();
+
+            int choice = input.nextInt();
+            switch (choice) {
+                case 1:
+                    getAllCategories();
+                    break;
+                case 2:
+                    addCategory();
+                    break;
+                case 3:
+                    editCategory();
+                    break;
+                case 4:
+                    deleteCategory();
+                    break;
+                case 5:
+                addProduct();
+                break;
+                case 6:editProduct();break;
+                case 7: deleteProduct();break;
+                case 8:
+                    return;
+                default:
+                    break;
+            }
+        }
     }
 
     private static void addProduct() {
