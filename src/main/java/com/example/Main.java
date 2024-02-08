@@ -1,6 +1,7 @@
 package com.example;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
@@ -10,14 +11,13 @@ import org.hibernate.Session;
 import com.example.models.Category;
 import com.example.models.CategoryImage;
 import com.example.models.Product;
+import com.example.models.ProductImage;
 import com.example.utils.HibernateUtil;
 import com.example.utils.ImageUtil;
 
 public class Main {
     public static void main(String[] args) {
-        // addCategory();
-        editCategory();
-        getAllCategories();
+        editProduct();
     }
 
     private static void addProduct() {
@@ -34,8 +34,8 @@ public class Main {
             product.setName(name);
 
             System.out.println("Enter description: ");
-            String image = scanner.nextLine();
-            product.setDescription(image);
+            String description = scanner.nextLine();
+            product.setDescription(description);
 
             System.out.println("Enter price: ");
             double price = scanner.nextDouble();
@@ -46,6 +46,22 @@ public class Main {
             int category_id = scanner.nextInt();
             category.setId(category_id);
             product.setCategory(category);
+
+            List<ProductImage> images = new ArrayList<>();
+
+            System.out.println("Enter number of images: ");
+            int numberOfImages = scanner.nextInt();
+            scanner.nextLine();
+
+            for (int i = 0; i < numberOfImages; i++) {
+                System.out.println("Enter image path for image " + (i + 1) + ": ");
+                String imagePath = scanner.nextLine();
+                ProductImage image = new ProductImage(imagePath);
+                image.setProduct(product);
+                images.add(image);
+            }
+
+            product.setImages(images);
 
             context.save(product);
             context.getTransaction().commit();
@@ -83,6 +99,22 @@ public class Main {
             int category_id = scanner.nextInt();
             category.setId(category_id);
             product.setCategory(category);
+
+            List<ProductImage> images = new ArrayList<>();
+
+            System.out.println("Enter number of images: ");
+            int numberOfImages = scanner.nextInt();
+            scanner.nextLine();
+
+            for (int i = 0; i < numberOfImages; i++) {
+                System.out.println("Enter image path for image " + (i + 1) + ": ");
+                String imagePath = scanner.nextLine();
+                ProductImage image = new ProductImage(imagePath);
+                image.setProduct(product);
+                images.add(image);
+            }
+
+            product.setImages(images);
 
             context.save(product);
             context.getTransaction().commit();

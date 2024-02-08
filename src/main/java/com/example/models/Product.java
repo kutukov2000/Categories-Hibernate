@@ -1,5 +1,8 @@
 package com.example.models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -31,6 +35,9 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductImage> images;
+
     @Override
     public String toString() {
         return "Product{" +
@@ -39,6 +46,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", category=" + category.getName() +
+                ", images=" + images +
                 '}';
     }
 }
