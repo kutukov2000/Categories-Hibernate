@@ -1,5 +1,6 @@
 package com.example;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ import com.example.models.Category;
 import com.example.models.CategoryImage;
 import com.example.models.Product;
 import com.example.utils.HibernateUtil;
+import com.example.utils.ImageUtil;
 
 public class Main {
     public static void main(String[] args) {
@@ -166,11 +168,15 @@ public class Main {
 
             System.out.println("Enter new path to image: ");
             String pathToImage = scanner.nextLine();
-            CategoryImage image = new CategoryImage(pathToImage);
+            String newImageName = ImageUtil.saveImage(pathToImage);
+            CategoryImage image = (CategoryImage) context.get(CategoryImage.class, category.getImage().getId());
+            image.setImage(newImageName);
             category.setImage(image);
 
             context.save(category);
             context.getTransaction().commit();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

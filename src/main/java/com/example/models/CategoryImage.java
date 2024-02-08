@@ -36,8 +36,7 @@ public class CategoryImage {
 
     public CategoryImage(String pathToImage) {
         try {
-            byte[] sampleImage = Files.readAllBytes(new File(pathToImage).toPath());
-            image = ImageUtil.saveImage(sampleImage);
+            image = ImageUtil.saveImage(pathToImage);
         } catch (IOException e) {
             e.printStackTrace();
         }
