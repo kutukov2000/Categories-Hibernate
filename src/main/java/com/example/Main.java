@@ -7,12 +7,15 @@ import java.util.Scanner;
 import org.hibernate.Session;
 
 import com.example.models.Category;
+import com.example.models.CategoryImage;
 import com.example.models.Product;
 import com.example.utils.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
-        deleteProduct();
+        // addCategory();
+        editCategory();
+        getAllCategories();
     }
 
     private static void addProduct() {
@@ -130,8 +133,10 @@ public class Main {
             String name = scanner.nextLine();
             category.setName(name);
 
-            System.out.println("Enter image: ");
-            String image = scanner.nextLine();
+            System.out.println("Enter path to image: ");
+            String pathToImage = scanner.nextLine();
+            CategoryImage image = new CategoryImage(pathToImage);
+            image.setCategory(category);
             category.setImage(image);
 
             category.setDateCreated(calendar.getTime());
@@ -159,8 +164,9 @@ public class Main {
             String name = scanner.nextLine();
             category.setName(name);
 
-            System.out.println("Enter new image: ");
-            String image = scanner.nextLine();
+            System.out.println("Enter new path to image: ");
+            String pathToImage = scanner.nextLine();
+            CategoryImage image = new CategoryImage(pathToImage);
             category.setImage(image);
 
             context.save(category);

@@ -4,6 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import com.example.models.Category;
+import com.example.models.CategoryImage;
 import com.example.models.Product;
 
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class HibernateUtil {
         try {
             Configuration conf = new Configuration().configure();
             conf.addAnnotatedClass(Category.class);
+            conf.addAnnotatedClass(CategoryImage.class);
             conf.addAnnotatedClass(Product.class);
             sessionFactory = conf.buildSessionFactory();
         } catch (Exception ex) {

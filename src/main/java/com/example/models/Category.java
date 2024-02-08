@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,9 +30,20 @@ public class Category {
     @Column(length = 200, nullable = false)
     private String name;
 
-    @Column(length = 200)
-    private String image;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "category")
+    private CategoryImage image;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", dateCreated=" + dateCreated +
+                ", name='" + name + '\'' +
+                ", image=" + (image != null ? image.getImage() : "null") +
+                ", products=" + products +
+                '}';
+    }
 }
