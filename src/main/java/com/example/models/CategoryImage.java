@@ -1,8 +1,6 @@
 package com.example.models;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
