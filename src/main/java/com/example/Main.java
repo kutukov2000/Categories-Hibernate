@@ -17,7 +17,7 @@ import com.example.utils.ImageUtil;
 
 public class Main {
     public static void main(String[] args) {
-        editProduct();
+        deleteCategory();
     }
 
     private static void addProduct() {
@@ -82,6 +82,10 @@ public class Main {
 
             Product product = (Product) context.get(Product.class, id);
 
+            if (product == null) {
+                throw new NullPointerException("Product not found with id: " + id);
+            }
+
             System.out.println("Enter new name: ");
             String name = scanner.nextLine();
             product.setName(name);
@@ -118,6 +122,8 @@ public class Main {
 
             context.save(product);
             context.getTransaction().commit();
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -132,8 +138,14 @@ public class Main {
 
             Product product = (Product) context.get(Product.class, id);
 
+            if (product == null) {
+                throw new NullPointerException("Product not found with id: " + id);
+            }
+
             context.delete(product);
             context.getTransaction().commit();
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -194,6 +206,10 @@ public class Main {
 
             Category category = (Category) context.get(Category.class, id);
 
+            if (category == null) {
+                throw new NullPointerException("Category not found with id: " + id);
+            }
+
             System.out.println("Enter new name: ");
             String name = scanner.nextLine();
             category.setName(name);
@@ -209,6 +225,8 @@ public class Main {
             context.getTransaction().commit();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -223,8 +241,14 @@ public class Main {
 
             Category category = (Category) context.get(Category.class, id);
 
+            if (category == null) {
+                throw new NullPointerException("Category not found with id: " + id);
+            }
+
             context.delete(category);
             context.getTransaction().commit();
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 }
