@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 public class ImageUtil {
@@ -27,5 +29,16 @@ public class ImageUtil {
         }
 
         return imageName;
+    }
+
+    public static void deleteImage(String imageName){
+        String folderPath = "src/main/resources/images/";
+        Path filePath = Paths.get(folderPath+imageName);
+
+        try {
+            Files.delete(filePath);
+        } catch (IOException e) {
+            System.err.println("Error deleting the file: " + e.getMessage());
+        }
     }
 }

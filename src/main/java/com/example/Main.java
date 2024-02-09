@@ -51,10 +51,14 @@ public class Main {
                     deleteCategory();
                     break;
                 case 5:
-                addProduct();
-                break;
-                case 6:editProduct();break;
-                case 7: deleteProduct();break;
+                    addProduct();
+                    break;
+                case 6:
+                    editProduct();
+                    break;
+                case 7:
+                    deleteProduct();
+                    break;
                 case 8:
                     return;
                 default:
@@ -129,6 +133,13 @@ public class Main {
                 throw new NullPointerException("Product not found with id: " + id);
             }
 
+            for (ProductImage image : product.getImages()) {
+                if (image != null) {
+                    ImageUtil.deleteImage(image.getImage());
+                    context.delete(image);
+                }
+            }
+
             System.out.println("Enter new name: ");
             String name = scanner.nextLine();
             product.setName(name);
@@ -183,6 +194,13 @@ public class Main {
 
             if (product == null) {
                 throw new NullPointerException("Product not found with id: " + id);
+            }
+
+            for (ProductImage image : product.getImages()) {
+                if (image != null) {
+                    ImageUtil.deleteImage(image.getImage());
+                    context.delete(image);
+                }
             }
 
             context.delete(product);
@@ -253,6 +271,12 @@ public class Main {
                 throw new NullPointerException("Category not found with id: " + id);
             }
 
+            CategoryImage categoryImage = (CategoryImage) context.get(CategoryImage.class, category.getImage().getId());
+
+            if (categoryImage != null) {
+                ImageUtil.deleteImage(categoryImage.getImage());
+            }
+
             System.out.println("Enter new name: ");
             String name = scanner.nextLine();
             category.setName(name);
@@ -260,13 +284,12 @@ public class Main {
             System.out.println("Enter new path to image: ");
             String pathToImage = scanner.nextLine();
             String newImageName = ImageUtil.saveImage(pathToImage);
-            CategoryImage image = (CategoryImage) context.get(CategoryImage.class, category.getImage().getId());
-            image.setImage(newImageName);
-            category.setImage(image);
+            categoryImage.setImage(newImageName);
 
             context.save(category);
             context.getTransaction().commit();
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());
@@ -286,6 +309,13 @@ public class Main {
 
             if (category == null) {
                 throw new NullPointerException("Category not found with id: " + id);
+            }
+
+            CategoryImage categoryImage = (CategoryImage) context.get(CategoryImage.class, category.getImage().getId());
+
+            if (categoryImage != null) {
+                ImageUtil.deleteImage(categoryImage.getImage());
+                context.delete(categoryImage);
             }
 
             context.delete(category);
